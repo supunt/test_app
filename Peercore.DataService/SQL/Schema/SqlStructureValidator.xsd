@@ -1,0 +1,81 @@
+﻿<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="root">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="Table">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Columns">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="Column" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string" use="required" />
+            <xs:attribute name="key" type="xs:string" use="required" />
+            <xs:attribute name="type" type="tableType" use="required" />
+          </xs:complexType>
+        </xs:element>
+        <xs:element maxOccurs="unbounded" name="Query">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="Generic">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="commandType" use="required" type="sqlType"/>
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Ingres">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="commandType" type="sqlType" use="required" />
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="SqlServer">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="commandType" type="sqlType" use="required" />
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="Oracle">
+                <xs:complexType>
+                  <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                      <xs:attribute name="commandType" type="sqlType" use="required" />
+                    </xs:extension>
+                  </xs:simpleContent>
+                </xs:complexType>
+              </xs:element>
+            </xs:sequence>
+            <xs:attribute name="id" type="xs:string" use="required" />
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:simpleType name="sqlType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Text"/>
+      <xs:enumeration value="StoredProcedure"/>
+      <xs:enumeration value="Table"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="tableType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="Primary"/>
+      <xs:enumeration value="Secondary"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>

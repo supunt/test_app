@@ -1,0 +1,742 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="Schema/SqlStructureValidator.xsd">
+
+
+  <Query id="GetNextSorderNo">
+    <Generic commandType="Text">
+      SELECT IFNULL(MAX(sorder_no),0)+1  FROM sorder_header
+    </Generic>
+    <Ingres commandType="Text">
+      SELECT IFNULL(MAX(sorder_no),0)+1  FROM sorder_header
+    </Ingres>
+    <SqlServer commandType="Text"></SqlServer>
+    <Oracle commandType="Text"></Oracle>
+   
+  </Query>
+
+  <Query id="InsertSorderHeader">
+    <Generic commandType="Text">
+      INSERT INTO sorder_header
+      (
+      sorder_no,
+      cust_code,
+      order_date,
+      ordered_by,
+      order_type,
+      date_required,
+      cust_order_no,
+      assignee_no,
+      source_code,
+      source_no,
+      rep_code
+      )
+      
+      VALUES
+      (
+      @SorderNo,
+      @CustomerCode,
+      @OrderDate,
+      @OrderedBy,
+      @OrderType,
+      @DateRequired,
+      @CustomerOrderNo,
+      @AssigneeNo,
+      @SourceCode,
+      @SourceNo,
+      @RepCode
+      )
+    </Generic>
+    <Ingres commandType="Text">
+      INSERT INTO sorder_header
+      (
+      sorder_no,
+      cust_code,
+      order_date,
+      ordered_by,
+      order_type,
+      date_required,
+      cust_order_no,
+      assignee_no,
+      source_code,
+      source_no,
+      rep_code
+      )
+
+      VALUES
+      (
+      @SorderNo,
+      @CustomerCode,
+      @OrderDate,
+      @OrderedBy,
+      @OrderType,
+      @DateRequired,
+      @CustomerOrderNo,
+      @AssigneeNo,
+      @SourceCode,
+      @SourceNo,
+      @RepCode
+      )
+    </Ingres>
+    <SqlServer commandType="Text"></SqlServer>
+    <Oracle commandType="Text"></Oracle>
+    <SqlLight commandType="Text">
+    </SqlLight>
+  </Query>
+
+
+  <Query id="InsertSorderDetail">
+    <Generic commandType="Text">
+      INSERT INTO sorder_detail
+      (
+      sorder_no,
+      item_no,
+      catlog_code,
+      source_code,
+      source_no,
+      order_qty,
+      desp_qty,
+      pallet_qty,
+      price,
+      amount,
+      disc_type,
+      disc_percent,
+      net_amount
+      )
+
+      VALUES
+      (
+      @SorderNo,
+      @ItemNo,
+      @CatlogCode,
+      @SourceCode,
+      @SourceNo,
+      @OrderQty,
+      @DespQty,
+      @PalletQty,
+      @Price,
+      @Amount,
+      @DiscType,
+      @DiscPercent,
+      @NetAmount
+      )
+    </Generic>
+    <Ingres commandType="Text">
+      INSERT INTO sorder_detail
+      (
+      sorder_no,
+      item_no,
+      catlog_code,
+      source_code,
+      source_no,
+      order_qty,
+      desp_qty,
+      pallet_qty,
+      price,
+      amount,
+      disc_type,
+      disc_percent,
+      net_amount
+      )
+
+      VALUES
+      (
+      @SorderNo,
+      @ItemNo,
+      @CatlogCode,
+      @SourceCode,
+      @SourceNo,
+      @OrderQty,
+      @DespQty,
+      @PalletQty,
+      @Price,
+      @Amount,
+      @DiscType,
+      @DiscPercent,
+      @NetAmount
+      )
+    </Ingres>
+    <SqlServer commandType="Text"></SqlServer>
+    <Oracle commandType="Text"></Oracle>
+    <SqlLight commandType="Text">
+    </SqlLight>
+  </Query>
+
+  <Query id="InsertOrderConfirmation">
+    <Generic commandType="Text">
+      INSERT INTO order_confirmation
+      (
+      order_confirmation_id,
+      web_id,
+      signature,
+      latitude,
+      longitude
+      )
+
+      VALUES
+      (
+      @OrderConfirmationId,
+      @WebId,
+      @Signature,
+      @Latitude,
+      @Longitude
+      )
+    </Generic>
+    <Ingres commandType="Text">
+      INSERT INTO order_confirmation
+      (
+      order_confirmation_id,
+      web_id,
+      signature,
+      latitude,
+      longitude
+      )
+      VALUES
+      (
+      @OrderConfirmationId,
+      @WebId,
+      @Signature,
+      @Latitude,
+      @Longitude
+      )
+    </Ingres>
+    <SqlServer commandType="Text"></SqlServer>
+    <Oracle commandType="Text"></Oracle>
+    <SqlLight commandType="Text">
+    </SqlLight>
+  </Query>
+
+  <Query id="GetNextOrderConfirmationId"> 
+    <Generic commandType="Text">
+      SELECT IFNULL(MAX(order_confirmation_id),0)+1  FROM order_confirmation
+    </Generic>
+    <Ingres commandType="Text">
+      SELECT IFNULL(MAX(order_confirmation_id),0)+1  FROM order_confirmation
+    </Ingres>
+    <SqlServer commandType="Text"></SqlServer>
+    <Oracle commandType="Text"></Oracle>
+
+  </Query>
+
+  <Query id="GetNextPFDWebOrderId">
+    <Generic commandType="Text">
+      SELECT MAX(ID) FROM pfd_web_sorder_seq
+    </Generic>
+    <Ingres commandType="Text">
+      SELECT MAX(ID) FROM pfd_web_sorder_seq
+    </Ingres>
+    <SqlServer commandType="Text"></SqlServer>
+    <Oracle commandType="Text"></Oracle>
+
+  </Query>
+  
+  <Query id="IncrementCurrentPFDWebOrderID">
+    <Generic commandType="Text">
+      UPDATE pfd_web_sorder_seq SET ID = (ID + 1)
+    </Generic>
+    <Ingres commandType="Text">
+      UPDATE pfd_web_sorder_seq SET ID = (ID + 1)
+    </Ingres>
+    <SqlServer commandType="Text"></SqlServer>
+    <Oracle commandType="Text"></Oracle>
+
+  </Query>
+  
+  <Query id="InsertWebOrderHeader">
+    <Generic commandType="Text">
+      Insert Into web_sorder_header
+      (
+      web_id,
+      order_date,
+      date_required,
+      cust_code,
+      comments,
+      order_note,
+      purchase_code,
+      status,
+      is_acknowledgement_required,
+      assignee_no,
+      freight,
+      is_saved,
+      is_processed_by_web_svr,
+      detail_changes_status,
+      sender_edi,
+      receiver_edi,
+      msg_ref,
+      response_date,
+      initial_date_required,
+      buyer_order_no,
+      promotional_deal_no,
+      buying_add_gs1_cd,
+      shipping_add_gs1_cd,
+      supplier_add_gs1_cd,
+      order_tot_amt,
+      tot_no_of_items,
+      as2_identifier
+      )
+      Values
+      (
+      @WebId,
+      @OrderDate,
+      @DateRequired,
+      @CustomerCode,
+      @Comments,
+      @OrderNote,
+      @PurchaseCode,
+      @Status,
+      @IsAckReq,
+      @AssigneeNo,
+      @Freight,
+      @IsSaved,
+      @IsProcessed,
+      @DetailStatus,
+      @SenderAddress,
+      @ReceiverAddress,
+      @MsgRef,
+      @OrderDate,
+      @DateRequired,
+      @BuyerOrderNo,
+      @PromotionNo,
+      @BuyingAddress,
+      @ShippingAddress,
+      @SupplierAddress,
+      @TotalAmount,
+      @ItemCount,
+      @AS2Identifier
+      )
+    </Generic>
+    <Ingres commandType="Text">
+      Insert Into web_sorder_header
+      (
+      web_id,
+      order_date,
+      date_required,
+      cust_code,
+      comments,
+      order_note,
+      purchase_code,
+      status,
+      is_acknowledgement_required,
+      assignee_no,
+      freight,
+      is_saved,
+      is_processed_by_web_svr,
+      detail_changes_status,
+      sender_edi,
+      receiver_edi,
+      msg_ref,
+      response_date,
+      initial_date_required,
+      buyer_order_no,
+      promotional_deal_no,
+      buying_add_gs1_cd,
+      shipping_add_gs1_cd,
+      supplier_add_gs1_cd,
+      order_tot_amt,
+      tot_no_of_items,
+      as2_identifier
+      )
+      Values
+      (
+      @WebId,
+      @OrderDate,
+      @DateRequired,
+      @CustomerCode,
+      @Comments,
+      @OrderNote,
+      @PurchaseCode,
+      @Status,
+      @IsAckReq,
+      @AssigneeNo,
+      @Freight,
+      @IsSaved,
+      @IsProcessed,
+      @DetailStatus,
+      @SenderAddress,
+      @ReceiverAddress,
+      @MsgRef,
+      @OrderDate,
+      @DateRequired,
+      @BuyerOrderNo,
+      @PromotionNo,
+      @BuyingAddress,
+      @ShippingAddress,
+      @SupplierAddress,
+      @TotalAmount,
+      @ItemCount,
+      @AS2Identifier
+      )
+    </Ingres>
+    <SqlServer commandType="Text"></SqlServer>
+    <Oracle commandType="Text"></Oracle>
+    <SqlLight commandType="Text">
+    </SqlLight>
+  </Query>
+
+  <Query id="InsertWebOrderDetail">
+    <Generic commandType="Text">
+      Insert Into web_sorder_detail
+      (
+      web_id,
+      catlog_code,
+      order_qty,
+      back_order_qty,
+      unit_price,
+      unit_cost,
+      unit_discount_perc,
+      tax,
+      free_qty,
+      product_note,
+      record_status,
+      gtin_code,
+      initial_order_qty,
+      initial_unit_price
+      )
+      Values
+      (
+      @WebId,
+      @CatlogCode,
+      @OrderQty,
+      @BackOrderQty,
+      @UnitPrice,
+      @UnitCost,
+      @UnitDiscountPerc,
+      @Tax,
+      @FreeQty,
+      @ProductNote,
+      @ItemStatus,
+      @GTINCode,
+      @OrderQty,
+      @UnitPrice
+      )
+    </Generic>
+    <Ingres commandType="Text">
+      Insert Into web_sorder_detail
+      (
+      web_id,
+      catlog_code,
+      order_qty,
+      back_order_qty,
+      unit_price,
+      unit_cost,
+      unit_discount_perc,
+      tax,
+      free_qty,
+      product_note,
+      record_status,
+      gtin_code,
+      initial_order_qty,
+      initial_unit_price
+      )
+      Values
+      (
+      @WebId,
+      @CatlogCode,
+      @OrderQty,
+      @BackOrderQty,
+      @UnitPrice,
+      @UnitCost,
+      @UnitDiscountPerc,
+      @Tax,
+      @FreeQty,
+      @ProductNote,
+      @ItemStatus,
+      @GTINCode,
+      @OrderQty,
+      @UnitPrice
+      )
+    </Ingres>
+    <SqlServer commandType="Text"></SqlServer>
+    <Oracle commandType="Text"></Oracle>
+    <SqlLight commandType="Text">
+    </SqlLight>
+  </Query>
+
+  <Query id="CancelWebOrder">
+    <Generic commandType="Text">
+      UPDATE web_sorder_header
+      SET Status='Delete'
+      WHERE web_id=@OrderId
+    </Generic>
+    <Ingres commandType="Text">
+      UPDATE web_sorder_header
+      SET Status='Delete'
+      WHERE web_id=@OrderId
+    </Ingres>
+    <SqlServer commandType="Text"></SqlServer>
+    <Oracle commandType="Text"></Oracle>
+    <SqlLight commandType="Text">
+    </SqlLight>
+  </Query>
+  
+  <Query id="GetWebOrderStatus">
+    <Generic commandType="Text">
+      SELECT Status
+      FROM web_sorder_header
+      WHERE web_id=@OrderId
+    </Generic>
+    <Ingres commandType="Text">
+      SELECT Status
+      FROM web_sorder_header
+      WHERE web_id=@OrderId
+    </Ingres>
+    <SqlServer commandType="Text"></SqlServer>
+    <Oracle commandType="Text"></Oracle>
+    <SqlLight commandType="Text">
+    </SqlLight>
+  </Query>
+
+  <Query id="GetWebOrders">
+
+    <Generic commandType="Text">
+      SELECT wsh.* FROM web_sorder_header wsh
+      INNER JOIN customer c on wsh.cust_code=c.cust_code
+      INNER JOIN rep r on c.rep_code=r.rep_code
+      WHERE order_date BETWEEN @StartDate AND @EndDate
+      AND r.originator=@Originator
+    </Generic>
+    <Ingres commandType="Text">
+      SELECT top 100 wsh.* FROM web_sorder_header wsh
+      WHERE order_date BETWEEN '10/10/2012' AND '10/10/2017'
+    </Ingres>
+    <SqlServer commandType="Text"></SqlServer>
+    <Oracle commandType="Text"></Oracle>
+    <SqlLight commandType="Text">
+    </SqlLight>
+  </Query>
+  
+  <Query id="GetWebOrdersForPOA">
+    <Generic commandType="Text">
+      SELECT
+      web_id
+      ,detail_changes_status
+      ,sender_edi
+      ,receiver_edi
+      ,msg_ref
+      ,order_response_no
+      ,response_date
+      ,date_required
+      ,buyer_order_no
+      ,promotional_deal_no
+      ,buying_add_gs1_cd
+      ,shipping_add_gs1_cd
+      ,supplier_add_gs1_cd
+      ,order_tot_amt
+      ,tot_no_of_items
+      ,as2_identifier
+      FROM web_sorder_header
+      WHERE  detail_changes_status != 0 AND is_processed_by_web_svr = 0 AND is_acknowledgement_required=1
+    </Generic>
+    <Ingres commandType="Text">
+
+      SELECT
+      web_id
+      ,detail_changes_status
+      ,sender_edi
+      ,receiver_edi
+      ,msg_ref
+      ,order_response_no
+      ,response_date
+      ,date_required
+      ,buyer_order_no
+      ,promotional_deal_no
+      ,buying_add_gs1_cd
+      ,shipping_add_gs1_cd
+      ,supplier_add_gs1_cd
+      ,order_tot_amt
+      ,tot_no_of_items
+      ,as2_identifier
+      FROM web_sorder_header
+      WHERE  detail_changes_status != 0 AND is_processed_by_web_svr = 0 AND is_acknowledgement_required=1
+    </Ingres>
+    <SqlServer commandType="Text"></SqlServer>
+    <Oracle commandType="Text"></Oracle>
+    <SqlLight commandType="Text">
+    </SqlLight>
+  </Query>
+  
+  <Query id="GetWebOrderDetailsById">
+
+    <Generic commandType="Text">
+      SELECT
+      web_id,
+      record_status,
+      gtin_code,
+      order_qty,
+      unit_cost
+      FROM web_sorder_detail
+      WHERE web_id={0}
+    </Generic>
+    <Ingres commandType="Text">
+      SELECT
+      web_id,
+      record_status,
+      gtin_code,
+      order_qty ,
+      unit_cost
+      FROM web_sorder_detail
+      WHERE web_id={0}
+    </Ingres>
+    <SqlServer commandType="Text"></SqlServer>
+    <Oracle commandType="Text"></Oracle>
+    <SqlLight commandType="Text">
+    </SqlLight>
+  </Query>
+
+  <Query id="GetWebOrderDetails">
+
+    <Generic commandType="Text">
+      SELECT * FROM web_sorder_detail WHERE web_id=@OrderId
+    </Generic>
+    <Ingres commandType="Text">
+      SELECT * FROM web_sorder_detail WHERE web_id=@OrderId
+    </Ingres>
+    <SqlServer commandType="Text"></SqlServer>
+    <Oracle commandType="Text"></Oracle>
+    <SqlLight commandType="Text">
+    </SqlLight>
+  </Query>
+
+  <Query id="GetCustomerCode">
+
+    <Generic commandType="Text">
+      SELECT cust_code FROM customer WHERE e_peer_key=@BillToNumber
+    </Generic>
+    <Ingres commandType="Text">
+      SELECT cust_code FROM customer WHERE e_peer_key=@BillToNumber
+    </Ingres>
+    <SqlServer commandType="Text"></SqlServer>
+    <Oracle commandType="Text"></Oracle>
+    <SqlLight commandType="Text">
+    </SqlLight>
+  </Query>
+  
+  <Query id="DeleteAllExistingOrderDetails">
+
+    <Generic commandType="Text">
+      DELETE from web_sorder_detail where web_id=@WebID
+    </Generic>
+    <Ingres commandType="Text">
+      DELETE from web_sorder_detail where web_id=@WebID
+    </Ingres>
+    <SqlServer commandType="Text"></SqlServer>
+    <Oracle commandType="Text"></Oracle>
+    <SqlLight commandType="Text">
+    </SqlLight>
+  </Query>
+  
+  <Query id="DeleteOrderHeader">
+
+    <Generic commandType="Text">
+      DELETE from web_sorder_header where web_id=@WebID
+    </Generic>
+    <Ingres commandType="Text">
+      DELETE from web_sorder_header where web_id=@WebID
+    </Ingres>
+    <SqlServer commandType="Text"></SqlServer>
+    <Oracle commandType="Text"></Oracle>
+    <SqlLight commandType="Text">
+    </SqlLight>
+  </Query>
+
+  <Query id="UpdateSyncStatus">
+    <Generic commandType="Text">
+      UPDATE web_sorder_header
+      SET is_processed_by_web_svr = 1
+          ,response_date = @ResponseDate
+      WHERE web_id = @WebId
+    </Generic>
+    <Ingres commandType="Text">
+      UPDATE web_sorder_header
+      SET is_processed_by_web_svr = 1
+      ,response_date = @ResponseDate
+      WHERE web_id = @WebId
+    </Ingres>
+    <SqlServer commandType="Text"></SqlServer>
+    <Oracle commandType="Text"></Oracle>
+  </Query>
+  
+
+  <Query id="GetCatlogCode">
+    <Generic commandType="Text">
+      SELECT TOP 1 catlog_code FROM catalog
+      WHERE tun_code = @BarCode
+        AND catalog.browse_available = 'Y'
+        AND catalog.del_flag != 'Y'
+    </Generic>
+    <Ingres commandType="Text">
+      SELECT TOP 1 catlog_code FROM catalog
+      WHERE tun_code = @BarCode
+      AND catalog.browse_available = 'Y'
+      AND catalog.del_flag != 'Y'
+    </Ingres>
+    <SqlServer commandType="Text"></SqlServer>
+    <Oracle commandType="Text"></Oracle>
+    <SqlLight commandType="Text">
+    </SqlLight>
+  </Query>
+
+  <Query id="GetCatlogCode">
+    <Generic commandType="Text">
+      SELECT TOP 1 catlog_code FROM catalog
+      WHERE tun_code = @BarCode
+      AND catalog.browse_available = 'Y'
+      AND catalog.del_flag != 'Y'
+    </Generic>
+    <Ingres commandType="Text">
+      SELECT TOP 1 catlog_code FROM catalog
+      WHERE tun_code = @BarCode
+      AND catalog.browse_available = 'Y'
+      AND catalog.del_flag != 'Y'
+    </Ingres>
+    <SqlServer commandType="Text"></SqlServer>
+    <Oracle commandType="Text"></Oracle>
+    <SqlLight commandType="Text">
+    </SqlLight>
+  </Query>
+
+  <Query id="GetAckCustCode">
+    <Generic commandType="Text">
+      SELECT TOP 1 cust_code FROM customer WHERE ( Lower(name) LIKE '%bidfood%' OR Lower(name) LIKE '%bidvest%' ) AND cust_code = @CustCode
+    </Generic>
+    <Ingres commandType="Text">
+      SELECT TOP 1 cust_code FROM customer WHERE ( Lower(name) LIKE '%bidfood%' OR Lower(name) LIKE '%bidvest%' ) AND cust_code = @CustCode
+    </Ingres>
+    <SqlServer commandType="Text"></SqlServer>
+    <Oracle commandType="Text"></Oracle>
+    <SqlLight commandType="Text">
+    </SqlLight>
+  </Query>
+
+  <Query id="GetAS2CommunicationDetails">
+
+    <Generic commandType="Text">
+      SELECT
+      as2_identifier,
+      as2_mdn_url,
+      certificate,
+      certificate_type,
+      as2_payload_type,
+      as2_message_format
+      FROM as2_communication_det
+      WHERE as2_identifier= @identifier
+    </Generic>
+    <Ingres commandType="Text">
+      SELECT
+      as2_identifier,
+      as2_mdn_url,
+      certificate,
+      certificate_type,
+      as2_payload_type,
+      as2_message_format
+      FROM as2_communication_det
+      WHERE as2_identifier= @identifier
+    </Ingres>
+    <SqlServer commandType="Text"></SqlServer>
+    <Oracle commandType="Text"></Oracle>
+    <SqlLight commandType="Text">
+    </SqlLight>
+  </Query>
+  
+  
+</root>

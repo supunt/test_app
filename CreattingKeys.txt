@@ -1,0 +1,30 @@
+ssl-keygen 
+openssl req -new -x509 -key tx_key -out txcert.pem -days 1095
+openssl pkcs12 -inkey tx_key -in txcert.pem -export -out txcert.pfx - this is client cert, I am not getting it
+openssl x509 -outform der -in txcert.pem -out certificate.der
+
+openssl req -new -x509 -key rxkey -out rxcert.pem -days 1095
+openssl x509 -outform der -in rxcert.pem -out certificate.der - this cert to client
+openssl pkcs12 -inkey rxkey -in rxcert.pem -export -out rxcert.pfx - this is my copy
+
+[For testing]
+ssl-keygen [and follow the prompt and set name as alice_rsa (This will create 2 keys alice_rsa and alice_rsa.pub)]
+openssl req -new -x509 -key alice_rsa -out alice.pem -days 1095 [Step 1 of creating Alice's pfx file for the encryption and signing]
+openssl pkcs12 -inkey alice_rsa -in alice.pem -export -out txcert.pfx [Step 2 of creating Alice's pfx file for the encryption and signing]
+
+// ---------------------------------------------------------------------------------------------------------------
+ssh-keygen.exe -f /g/Work/SSLKeys/peercore_rsa_1024 -N p33rc0r3_rsa
+openssl req -new -x509 -key /g/Work/SSLKeys/peercore_rsa_1024 -out peercore_pem.pem -days 1095
+	- RSA key password - p33rc0r3_rsa
+	1) Country Name (2 letter code) [AU]:AU
+	2) State or Province Name (full name) [Some-State]:VIC
+	3) Locality Name (eg, city) []:Melbourne
+	4) Organization Name (eg, company) [Internet Widgits Pty Ltd]:Peercore NexGen
+	5) Organizational Unit Name (eg, section) []:Development
+	6) Common Name (e.g. server FQDN or YOUR name) []:PITSKYWRITER
+	7) Email Address []:as2tester@peercore.com.au
+
+openssl x509 -outform der -in /g/Work/SSLKeys/peercore_pem.pem -out /g/Work/SSLKeys/peercore_testting_cert.der
+openssl pkcs12 -inkey /g/Work/SSLKeys/peercore_rsa_1024 -in /g/Work/SSLKeys/peercore_pem.pem -export -out /g/Work/SSLKeys/peercore_testing_pfx.pfx
+	- RSA key password - p33rc0r3_rsa
+	- Export pass : <any> (p33rc0r3_rsa)
